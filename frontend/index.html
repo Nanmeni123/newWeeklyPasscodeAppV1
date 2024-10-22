@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Passcode Generator</title>
+    <script>
+        async function generatePasscode() {
+            try {
+                const response = await fetch('/passcode-generator');
+                if (response.ok) {
+                    const result = await response.text();
+                    document.getElementById('result').innerText = result;
+                } else {
+                    document.getElementById('result').innerText = `Error: ${response.status} - ${response.statusText}`;
+                }
+            } catch (error) {
+                document.getElementById('result').innerText = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Weekly Passcode Generator</h1>
+    <button onclick="generatePasscode()">Generate Passcode</button>
+    <p id="result"></p>
+</body>
+</html>
+    

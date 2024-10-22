@@ -1,0 +1,17 @@
+
+{
+  "name": "weekly-passcode-app",
+  "version": "1.0.0",
+  "description": "Weekly Passcode Generator using Node.js and Express",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+    
