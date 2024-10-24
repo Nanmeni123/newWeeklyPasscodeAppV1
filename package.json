@@ -1,6 +1,6 @@
 
 {
-  "name": "weekly-passcode-app",
+  "name": "new-weekly-passcode-app",
   "version": "1.0.0",
   "description": "Weekly Passcode Generator using Node.js and Express",
   "main": "app.js",
