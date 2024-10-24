@@ -36,6 +36,11 @@ WeeklyPasscodeApp
 5. **.env**:
    - Stores the environment variables such as `Bearer_Token`, `Event_ID`, `Update_event_passcode`, and `X_Switch_User`.
    - Make sure this file is not included in the repository by adding it to `.gitignore` for security purposes.
+  
+6. **deployement**
+```
+ az webapp up --resource-group <ResourceGroupName> --name <AppName> --runtime "NODE|18-lts"
+```
 
 6. **README.md**:
    - Documentation providing an overview of the project, setup instructions, and how to run the application.
