@@ -74,7 +74,7 @@ WeeklyPasscodeApp
 
 2. **Deploy the Application**:
    - You can deploy using various methods such as Azure CLI, GitHub Actions, or through the Azure portal.
-   - Ensure all project files except the `.env` file are included in the deployment.
+   - Ensure all project files are included in the deployment.
 
 3. **Set Environment Variables**:
    - In the Azure portal, navigate to your Web App.
