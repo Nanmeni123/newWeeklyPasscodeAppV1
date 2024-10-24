@@ -13,7 +13,6 @@ WeeklyPasscodeApp
 ├── package.json          # Node.js dependencies and scripts
 ├── passcode-generator
 │   └── generator.js      # Logic for generating the weekly passcode
-├── .env                  # Environment variables (not to be committed to version control)
 └── README.md             # Documentation for the project
 ```
 
