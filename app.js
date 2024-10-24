@@ -1,7 +1,5 @@
-
 const axios = require('axios');
 const path = require('path');
-const fs = require('fs');
 const crypto = require('crypto');
 const express = require('express');
 
@@ -11,17 +9,12 @@ const PORT = process.env.PORT || 3000;
 // Middleware to parse JSON
 app.use(express.json());
 
+// Serve static files from the "frontend" directory
+app.use(express.static(path.join(__dirname, 'frontend')));
+
 // Route for serving the index.html file
 app.get('/', (req, res) => {
-    const htmlFilePath = path.join(__dirname, 'frontend', 'index.html');
-
-    try {
-        const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8');
-        res.status(200).send(htmlContent);
-    } catch (error) {
-        console.error('index.html not found.');
-        res.status(404).send('index.html not found.');
-    }
+    res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
 // Route for generating the weekly passcode
@@ -34,11 +27,13 @@ app.get('/passcode-generator', async (req, res) => {
     const updateEventEndpoint = process.env.Update_event_passcode;
     const xSwitchUser = process.env.X_Switch_User;
 
-    // Log the values of environment variables
-    console.log(`Bearer_Token: ${bearerToken}`);
-    console.log(`Event_ID: ${eventId}`);
-    console.log(`Update_event_passcode: ${updateEventEndpoint}`);
-    console.log(`X_Switch_User: ${xSwitchUser}`);
+    // Log the values of environment variables only in non-production environments
+    if (process.env.NODE_ENV !== 'production') {
+        console.log(`Bearer_Token: ${bearerToken}`);
+        console.log(`Event_ID: ${eventId}`);
+        console.log(`Update_event_passcode: ${updateEventEndpoint}`);
+        console.log(`X_Switch_User: ${xSwitchUser}`);
+    }
 
     if (!bearerToken || !eventId || !updateEventEndpoint || !xSwitchUser) {
         console.error('One or more environment variables are missing.');
@@ -83,21 +78,22 @@ app.get('/passcode-generator', async (req, res) => {
     }
 });
 
+// Function to generate a passcode
 function generatePasscode() {
     const specialCharacters = '!@#$%^&*';
     const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const digits = '0123456789';
-    return (
-        letters.charAt(crypto.randomInt(letters.length)) +
-        letters.charAt(crypto.randomInt(letters.length)).toLowerCase() +
-        letters.charAt(crypto.randomInt(letters.length)).toUpperCase() +
-        digits.charAt(crypto.randomInt(digits.length)) +
+
+    return [
+        letters.charAt(crypto.randomInt(letters.length)),
+        letters.charAt(crypto.randomInt(letters.length)).toLowerCase(),
+        letters.charAt(crypto.randomInt(letters.length)).toUpperCase(),
+        digits.charAt(crypto.randomInt(digits.length)),
         specialCharacters.charAt(crypto.randomInt(specialCharacters.length))
-    );
+    ].join('');
 }
 
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-    
